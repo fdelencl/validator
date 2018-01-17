@@ -52,7 +52,9 @@ const schema = {
 ```
 in this case:
 - the 'nested1' variable is not optionnal and can contain 'var1'.
+
 - the 'nested2' variable is optionnal and can contain 'var2'.
+
 
 ---
 For the case you need to validate an array, your schema will look like this:
@@ -67,7 +69,9 @@ const schema = {
 ```
 in this case:
 - the 'array1' variable is not optionnal and may only contain variables that accord to at least one of the rules described in the schema.
+
 - the 'nested2' variable is optionnal and may only contain booleans.
+
 
 ---
 To add your own set of rules to the list of default rules or override existing ones you will have to create an object where each key is the name of the rule you wish to call and each value is a function returning an value that is truthy if it's ok or falsy if it is not ok.
@@ -83,8 +87,11 @@ const customRules = {
 ---
 To validate an object you need to require the package in your file and directly call the function and give the required parameters:
 - object: the object you want to validate
+
 - schema: the schema you want your object to accord to
+
 - customRules (optionnal): the custom rules relative to your specific use
+
 
 example:
 ```javascript
@@ -95,7 +102,9 @@ const validation = validator({ user: 'George' }, { user: 'string|truthy|name' },
 ---
 The return values are:
 - _null_ if everything is alright
+
 - an object showing each variable that didn't pass with for each variable an array of error message for which rule didn't make it.
+
 
 ---
 **!! Be Carefull !!** If the object contains variables that are not mentionned in the schema, they are deleted.
