@@ -10,6 +10,7 @@ $ npm install --save @jin-pack/jin-validator
 
 # Use
 A list of rules are provided with the package and can be supplemented by you own set of rules for specific uses.
+
 - truthy: the value must be truthy
 
 - number: the value must be a number or castable as a number (ex: 23.5 or '23.5')
@@ -51,6 +52,7 @@ const schema = {
 }
 ```
 in this case:
+
 - the 'nested1' variable is not optionnal and can contain 'var1'.
 
 - the 'nested2' variable is optionnal and can contain 'var2'.
@@ -68,6 +70,7 @@ const schema = {
 }
 ```
 in this case:
+
 - the 'array1' variable is not optionnal and may only contain variables that accord to at least one of the rules described in the schema.
 
 - the 'nested2' variable is optionnal and may only contain booleans.
@@ -86,6 +89,7 @@ const customRules = {
 
 ---
 To validate an object you need to require the package in your file and directly call the function and give the required parameters:
+
 - object: the object you want to validate
 
 - schema: the schema you want your object to accord to
