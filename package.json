@@ -1,0 +1,25 @@
+{
+  "name": "@jin-pack/jin-validator",
+  "version": "1.0.0",
+  "description": "a recursive data validator",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/jinsuite/jin-validator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/jinsuite/jin-validator#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.15.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "mocha": "^4.1.0",
+    "mocha-clean": "^1.0.0"
+  }
+}
