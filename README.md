@@ -11,13 +11,21 @@ $ npm install --save @jin-pack/jin-validator
 # Use
 A list of rules are provided with the package and can be supplemented by you own set of rules for specific uses.
 - truthy: the value must be truthy
+
 - number: the value must be a number or castable as a number (ex: 23.5 or '23.5')
+
 - string: the value must be a string type
+
 - boolean: the value must be a boolean type
+
 - integer: the value must be castable as an integer (ex: 23 or '23')
+
 - MD5: the value must be a string that is 32 character long of only alphanumeric characters
+
 - url: starts with 'http://' or 'https://' with no space inside
+
 - binary: the value is either '0' or '1'
+
 - opt: the value is optional
 
 For numbers, you can also use rules like '>X', '<=Y' or '=Z' where X, Y and Z are numbers. The value will be checked acording to the rule.
