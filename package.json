@@ -1,6 +1,6 @@
 {
   "name": "@jin-pack/jin-validator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "a recursive data validator.",
   "main": "index.js",
   "scripts": {},
