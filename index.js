@@ -11,7 +11,8 @@ const lib = {
     timestamp_milliseconds: value => lib.integer(value),
     MD5: value => lib.string(value) && /^[a-f0-9]{32}$/.test(value),
     url: value => /^(?:https|http):\/\/[^ ]{1,}$/.test(value),
-    binary: value => value === '1' || value === '0'
+    binary: value => value === '1' || value === '0',
+    array: value => Array.isArray(value) === true
 };
 
 function equal(value, instruction) {
