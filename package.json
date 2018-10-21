@@ -1,5 +1,5 @@
 {
-  "name": "validator",
+  "name": "fdelencl42/validator",
   "version": "1.0.5",
   "description": "a recursive data validator.",
   "main": "index.js",
@@ -11,5 +11,7 @@
   "keywords": [],
   "author": "Félix Delenclos",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "validator": "github:fdelencl42/validator"
+  }
 }
