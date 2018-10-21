@@ -1,16 +1,19 @@
 {
-  "name": "fdelencl42/validator",
-  "version": "1.0.5",
+  "name": "validator",
+  "version": "1.0.6",
   "description": "a recursive data validator.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
-    "url": "git@github.com:fdelencl42/validator.git"
+    "url": "git+https://github.com/fdelencl42/validator.git"
   },
-  "keywords": [],
-  "author": "Félix Delenclos",
+  "author": "Felix Delenclos",
   "license": "ISC",
-  "dependencies": {
-  }
+  "bugs": {
+    "url": "https://github.com/fdelencl42/validator/issues"
+  },
+  "homepage": "https://github.com/fdelencl42/validator#readme"
 }
