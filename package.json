@@ -12,6 +12,5 @@
   "author": "Félix Delenclos",
   "license": "ISC",
   "dependencies": {
-    "validator": "github:fdelencl42/validator"
   }
 }
