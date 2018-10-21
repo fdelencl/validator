@@ -1,11 +1,11 @@
-# Jin-validator
-jin-validator is a package designed to check the content of any javascript object and trim any undesired elements from it.
+# validator
+validator is a package designed to check the content of any javascript object and trim any undesired elements from it.
 It works by verifying a set of rules to your object. The rules to apply to each element is established by setting up a Schema object which describe which rule to apply to which part of you object.
 
 ### Installation
 
 ```sh
-$ npm install --save @jin-pack/jin-validator
+$ npm install 
 ```
 
 # Use
