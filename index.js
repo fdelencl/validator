@@ -32,7 +32,7 @@ function equal(value, instruction) {
 function validate(value, instruction) {
     let conditions = instruction.split('|');
     conditions = conditions.map(c => {
-       const [opt, message] = b.split('??');
+       const [opt, message] = c.split('??');
        return { opt, message }
     })
     if (conditions.includes('opt') && value === undefined) return [];
