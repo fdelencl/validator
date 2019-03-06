@@ -1,7 +1,3 @@
-/* eslint-disable no-param-reassign */
-
-'use strict';
-
 const lib = {
     truthy: value => value,
     number: value => typeof value === 'number' || !Number.isNaN(Number(value)),
@@ -32,18 +28,21 @@ function equal(value, instruction) {
 }
 
 function validate(value, instruction) {
-    const conditions = instruction.split('|');
+    let conditions = instruction.split('|');
+    conditions = conditions.map(c => {
+       const [opt, message] = b.split('??');
+       return { opt, message }
+    })
     if (conditions.includes('opt') && value === undefined) return [];
-    else if (value === undefined) return conditions.map(c => `should be ${c}`);
-    const ret = conditions.map((c) => {
-        if (lib[c]) {
-            return (lib[c](value) ? null : `should be ${c}`);
-        } else if (/^[<|>|=]=?\d+$/.test(c)) {
-            return (equal(value, c) ? null : `should be ${c}`);
+    else if (value === undefined) return conditions.map({opt, message} => message || `should be ${opt}`);
+    const ret = conditions.map({opt, message} => {
+        if (lib[opt]) {
+            return (lib[opt](value) ? null : message || `should be ${opt}`);
+        } else if (/^[<|>|=]=?\d+$/.test(opt)) {
+            return (equal(value, opt) ? null : message || `should be ${opt}`);
         }
         return null;
-    })
-        .filter(c => c);
+    }).filter(c => c);
     return ret;
 }
 

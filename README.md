@@ -5,7 +5,7 @@ It works by verifying a set of rules to your object. The rules to apply to each 
 ### Installation
 
 ```sh
-$ npm install fdelencl42/validator
+$ npm install fdelencl/validator
 ```
 
 # Use
