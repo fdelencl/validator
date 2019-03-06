@@ -14,13 +14,13 @@ const lib = {
 function equal(value, instruction) {
     switch (instruction[0]) {
     case '>':
-        if (instruction[1] === '=') return value >= Number(instruction.substring(2));
+        if (instruction[1] === '=') { return value >= Number(instruction.substring(2)); }
         return value > Number(instruction.substring(1));
     case '<':
-        if (instruction[1] === '=') return value <= Number(instruction.substring(2));
+        if (instruction[1] === '=') { return value <= Number(instruction.substring(2)); }
         return value < Number(instruction.substring(1));
     case '=':
-        if (instruction[1] === '=') return value === Number(instruction.substring(2));
+        if (instruction[1] === '=') { return value === Number(instruction.substring(2)); }
         return value === Number(instruction.substring(1));
     default:
         return null;
@@ -33,8 +33,8 @@ function validate(value, instruction) {
        const [opt, message] = b.split('??');
        return { opt, message }
     })
-    if (conditions.includes('opt') && value === undefined) return [];
-    else if (value === undefined) return conditions.map({opt, message} => message || `should be ${opt}`);
+    if (conditions.includes('opt') && value === undefined) { return []; }
+    else if (value === undefined) { return conditions.map({opt, message} => message || `should be ${opt}`); }
     const ret = conditions.map({opt, message} => {
         if (lib[opt]) {
             return (lib[opt](value) ? null : message || `should be ${opt}`);
@@ -49,7 +49,7 @@ function validate(value, instruction) {
 function check(obj, schema, opt = {}) {
     Object.keys(opt).forEach((o) => { lib[o] = opt[o]; });
     if (Array.isArray(schema)) {
-        if (!Array.isArray(obj)) return ['should be an array'];
+        if (!Array.isArray(obj)) { return ['should be an array']; }
         const ret = obj.map(o => schema.find((s) => {
             const r = check(o, s);
             return (r == null || !Object.keys(r).length);
@@ -61,12 +61,12 @@ function check(obj, schema, opt = {}) {
             if (obj === undefined && schema.opt === true) return null;
             return check(obj, schema.schema);
         }
-        if (!(typeof obj === 'object')) return ['should be an object'];
+        if (!(typeof obj === 'object')) { return ['should be an object']; }
         const ret = {};
-        Object.keys(obj).forEach((key) => { if (schema[key] === undefined) delete obj[key]; });
+        Object.keys(obj).forEach((key) => { if (schema[key] === undefined) { delete obj[key]; } });
 
         Object.keys(schema).forEach((s) => { ret[s] = check(obj[s], schema[s]); });
-        Object.keys(ret).forEach((r) => { if (ret[r] === null) delete ret[r]; });
+        Object.keys(ret).forEach((r) => { if (ret[r] === null) { delete ret[r]; } });
         return !Object.keys(ret).length ? null : ret;
     } else if (typeof schema === 'string') {
         const ret = validate(obj, schema);
