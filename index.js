@@ -35,7 +35,7 @@ function validate(value, instruction) {
        const [opt, message] = c.split('??');
        return { opt, message }
     })
-    if (conditions.includes('opt') && value === undefined) return [];
+    if (conditions.find(c => c.opt == 'opt') && value === undefined) return [];
     else if (value === undefined) return conditions.map(({opt, message}) => message || `should be ${opt}`);
     const ret = conditions.map(({opt, message}) => {
         if (lib[opt]) {
