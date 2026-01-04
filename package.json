@@ -1,19 +1,40 @@
 {
   "name": "validator",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "a recursive data validator.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fdelencl42/validator.git"
+    "url": "git+https://github.com/fdelencl/validator.git"
   },
   "author": "Felix Delenclos",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fdelencl42/validator/issues"
+    "url": "https://github.com/fdelencl/validator/issues"
   },
-  "homepage": "https://github.com/fdelencl42/validator#readme"
+  "homepage": "https://github.com/fdelencl/validator#readme",
+  "sideEffects": false,
+  "devDependencies": {
+    "tsup": "^7.3.0",
+    "typescript": "^5.3.3"
+  }
 }

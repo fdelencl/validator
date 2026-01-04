@@ -9,6 +9,28 @@ $ npm install fdelencl/validator
 ```
 
 # Use
+You can now consume the package with modern ESM imports or classic `require`, and TypeScript definitions are shipped by default:
+
+```javascript
+import validator from 'validator';
+
+// or
+// const validator = require('@jin-pack/jin-validator');
+```
+
+TypeScript example:
+
+```typescript
+import validator, { Schema, RuleMap } from 'validator';
+
+const customRules: RuleMap = {
+    name: value => typeof value === 'string' && value.length > 1
+};
+
+const schema: Schema = { user: 'string|name' };
+const errors = validator({ user: 'George' }, schema, customRules);
+```
+
 A list of rules are provided with the package and can be supplemented by you own set of rules for specific uses.
 
 - truthy: the value must be truthy
@@ -99,7 +121,7 @@ To validate an object you need to require the package in your file and directly 
 
 example:
 ```javascript
-const validator = require('@jin-pack/jin-validator');
+const validator = require('validator');
 const validation = validator({ user: 'George' }, { user: 'string|truthy|name' }, { name: value => !value.includes(' ') } );
 ```
 
@@ -119,7 +141,7 @@ The return values are:
 ---
 ### Example use
 ```javascript
-const validator = require('@jin-pack/jin-validator');
+const validator = require('validator');
 
 const opt = {
     statusValue: value => ['published', 'deleted'].includes(value)
