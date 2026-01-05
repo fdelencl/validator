@@ -55,12 +55,12 @@ function validate(
   const isOptional = conditions.some((c) => c.opt === "opt");
   if (isOptional && value === undefined) return [];
   if (value === undefined)
-    return conditions.map(({ opt, message }) => message || `should be ${opt}`);
+    return conditions.map(({ opt, message }) => message || opt);
 
   return conditions
     .map(({ opt, message }) => {
       if (rules[opt]) {
-        return rules[opt](value) ? null : message || `should be ${opt}`;
+        return rules[opt](value) ? null : message || opt;
       }
       if (/^[<|>|=]=?\d+$/.test(opt)) {
         return evaluateComparison(
@@ -68,7 +68,7 @@ function validate(
           opt
         )
           ? null
-          : message || `should be ${opt}`;
+          : message || opt;
       }
       return null;
     })
@@ -99,7 +99,7 @@ function checkValue(
   rules: RuleMap
 ): ValidationResult {
   if (Array.isArray(schema)) {
-    if (!Array.isArray(obj)) return ["should be an array"];
+    if (!Array.isArray(obj)) return ["array"];
 
     const invalidEntries = obj
       .map((o) =>
@@ -124,7 +124,7 @@ function checkValue(
   }
 
   if (schema && typeof schema === "object") {
-    if (typeof obj !== "object" || obj === null) return ["should be an object"];
+    if (typeof obj !== "object" || obj === null) return ["object"];
 
     const workingObj = obj as Record<string, unknown>;
     trimUnknownKeys(workingObj, schema as SchemaObject);

@@ -78,16 +78,16 @@ function validate(value, instruction, rules) {
   if (isOptional && value === void 0)
     return [];
   if (value === void 0)
-    return conditions.map(({ opt, message }) => message || `should be ${opt}`);
+    return conditions.map(({ opt, message }) => message || opt);
   return conditions.map(({ opt, message }) => {
     if (rules[opt]) {
-      return rules[opt](value) ? null : message || `should be ${opt}`;
+      return rules[opt](value) ? null : message || opt;
     }
     if (/^[<|>|=]=?\d+$/.test(opt)) {
       return evaluateComparison(
         typeof value === "number" ? value : Number(value),
         opt
-      ) ? null : message || `should be ${opt}`;
+      ) ? null : message || opt;
     }
     return null;
   }).filter((c) => Boolean(c));
@@ -104,7 +104,7 @@ function trimUnknownKeys(target, schema) {
 function checkValue(obj, schema, rules) {
   if (Array.isArray(schema)) {
     if (!Array.isArray(obj))
-      return ["should be an array"];
+      return ["array"];
     const invalidEntries = obj.map(
       (o) => schema.find((s) => {
         const result = checkValue(o, s, rules);
@@ -120,7 +120,7 @@ function checkValue(obj, schema, rules) {
   }
   if (schema && typeof schema === "object") {
     if (typeof obj !== "object" || obj === null)
-      return ["should be an object"];
+      return ["object"];
     const workingObj = obj;
     trimUnknownKeys(workingObj, schema);
     const result = {};
