@@ -14,16 +14,16 @@ export interface SchemaWrapper {
 export type Schema = SchemaString | SchemaObject | SchemaArray | SchemaWrapper;
 
 export interface ValidationErrorObject {
-  [key: string]: ValidationErrorObject | string[] | string | null;
+    [key: string]: ValidationErrorObject | string[] | string | undefined;
 }
 
-export type ValidationResult = ValidationErrorObject | string[] | string | null;
+export type ValidationResult = ValidationErrorObject | string[] | undefined;
 
 function evaluateComparison(
   value: unknown,
   instruction: string
-): boolean | null {
-  if (typeof value !== "number") return null;
+): boolean | undefined {
+  if (typeof value !== "number") return undefined;
   switch (instruction[0]) {
     case ">":
       if (instruction[1] === "=")
@@ -38,7 +38,7 @@ function evaluateComparison(
         return value === Number(instruction.substring(2));
       return value === Number(instruction.substring(1));
     default:
-      return null;
+      return undefined;
   }
 }
 
@@ -60,17 +60,17 @@ function validate(
   return conditions
     .map(({ opt, message }) => {
       if (rules[opt]) {
-        return rules[opt](value) ? null : message || opt;
+        return rules[opt](value) ? undefined : message || opt;
       }
       if (/^[<|>|=]=?\d+$/.test(opt)) {
         return evaluateComparison(
           typeof value === "number" ? value : Number(value),
           opt
         )
-          ? null
+          ? undefined
           : message || opt;
       }
-      return null;
+      return undefined;
     })
     .filter((c): c is string => Boolean(c));
 }
@@ -101,30 +101,26 @@ function checkValue(
   if (Array.isArray(schema)) {
     if (!Array.isArray(obj)) return ["array"];
 
-    const invalidEntries = obj
-      .map((o) =>
-        schema.find((s) => {
-          const result = checkValue(o, s, rules);
-          return (
-            result == null ||
-            (typeof result === "object" && !Object.keys(result).length)
-          );
-        })
-      )
-      .filter((o) => !o);
-
-    return invalidEntries.length
-      ? `must respect this schema: ${JSON.stringify(schema)}`
-      : null;
+    const invalidEntries = obj.map((o) =>{
+      const ret = schema.map((s) => checkValue(o, s, rules));
+      if (ret.some((e) => e === undefined))
+        return undefined;
+      return ret;
+    })
+    
+    if (invalidEntries.find((e) => e !== undefined)) {
+      return invalidEntries.flat() as unknown as string[];
+    }
+    return undefined;
   }
 
   if (hasSchemaWrapper(schema)) {
-    if (obj === undefined && schema.opt === true) return null;
+    if (obj === undefined && schema.opt === true) return undefined;
     return checkValue(obj, schema.schema, rules);
   }
 
   if (schema && typeof schema === "object") {
-    if (typeof obj !== "object" || obj === null) return ["object"];
+    if (typeof obj !== "object" || obj === undefined) return ["object"];
 
     const workingObj = obj as Record<string, unknown>;
     trimUnknownKeys(workingObj, schema as SchemaObject);
@@ -140,7 +136,7 @@ function checkValue(
 
     Object.keys(result).forEach((key) => {
       if (
-        result[key] === null ||
+        result[key] === undefined ||
         (typeof result[key] === "object" &&
           !Object.keys(result[key] as object).length)
       ) {
@@ -148,15 +144,15 @@ function checkValue(
       }
     });
 
-    return Object.keys(result).length ? result : null;
+    return Object.keys(result).length ? result : undefined;
   }
 
   if (typeof schema === "string") {
     const ret = validate(obj, schema, rules);
-    return ret.length ? ret : null;
+    return ret.length ? ret : undefined;
   }
 
-  return null;
+  return undefined;
 }
 
 export function check(

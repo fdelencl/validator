@@ -24,7 +24,7 @@ var baseRules = {
 // src/index.ts
 function evaluateComparison(value, instruction) {
   if (typeof value !== "number")
-    return null;
+    return void 0;
   switch (instruction[0]) {
     case ">":
       if (instruction[1] === "=")
@@ -39,7 +39,7 @@ function evaluateComparison(value, instruction) {
         return value === Number(instruction.substring(2));
       return value === Number(instruction.substring(1));
     default:
-      return null;
+      return void 0;
   }
 }
 function validate(value, instruction, rules) {
@@ -54,15 +54,15 @@ function validate(value, instruction, rules) {
     return conditions.map(({ opt, message }) => message || opt);
   return conditions.map(({ opt, message }) => {
     if (rules[opt]) {
-      return rules[opt](value) ? null : message || opt;
+      return rules[opt](value) ? void 0 : message || opt;
     }
     if (/^[<|>|=]=?\d+$/.test(opt)) {
       return evaluateComparison(
         typeof value === "number" ? value : Number(value),
         opt
-      ) ? null : message || opt;
+      ) ? void 0 : message || opt;
     }
-    return null;
+    return void 0;
   }).filter((c) => Boolean(c));
 }
 function hasSchemaWrapper(schema) {
@@ -78,21 +78,24 @@ function checkValue(obj, schema, rules) {
   if (Array.isArray(schema)) {
     if (!Array.isArray(obj))
       return ["array"];
-    const invalidEntries = obj.map(
-      (o) => schema.find((s) => {
-        const result = checkValue(o, s, rules);
-        return result == null || typeof result === "object" && !Object.keys(result).length;
-      })
-    ).filter((o) => !o);
-    return invalidEntries.length ? `must respect this schema: ${JSON.stringify(schema)}` : null;
+    const invalidEntries = obj.map((o) => {
+      const ret = schema.map((s) => checkValue(o, s, rules));
+      if (ret.some((e) => e === void 0))
+        return void 0;
+      return ret;
+    });
+    if (invalidEntries.find((e) => e !== void 0)) {
+      return invalidEntries.flat();
+    }
+    return void 0;
   }
   if (hasSchemaWrapper(schema)) {
     if (obj === void 0 && schema.opt === true)
-      return null;
+      return void 0;
     return checkValue(obj, schema.schema, rules);
   }
   if (schema && typeof schema === "object") {
-    if (typeof obj !== "object" || obj === null)
+    if (typeof obj !== "object" || obj === void 0)
       return ["object"];
     const workingObj = obj;
     trimUnknownKeys(workingObj, schema);
@@ -105,17 +108,17 @@ function checkValue(obj, schema, rules) {
       );
     });
     Object.keys(result).forEach((key) => {
-      if (result[key] === null || typeof result[key] === "object" && !Object.keys(result[key]).length) {
+      if (result[key] === void 0 || typeof result[key] === "object" && !Object.keys(result[key]).length) {
         delete result[key];
       }
     });
-    return Object.keys(result).length ? result : null;
+    return Object.keys(result).length ? result : void 0;
   }
   if (typeof schema === "string") {
     const ret = validate(obj, schema, rules);
-    return ret.length ? ret : null;
+    return ret.length ? ret : void 0;
   }
-  return null;
+  return void 0;
 }
 function check(obj, schema, customRules = {}) {
   const rules = { ...baseRules, ...customRules };

@@ -12,9 +12,9 @@ interface SchemaWrapper {
 }
 type Schema = SchemaString | SchemaObject | SchemaArray | SchemaWrapper;
 interface ValidationErrorObject {
-    [key: string]: ValidationErrorObject | string[] | string | null;
+    [key: string]: ValidationErrorObject | string[] | string | undefined;
 }
-type ValidationResult = ValidationErrorObject | string[] | string | null;
+type ValidationResult = ValidationErrorObject | string[] | undefined;
 declare function check(obj: unknown, schema: Schema, customRules?: RuleMap): ValidationResult;
 
 export { type Schema, type SchemaArray, type SchemaObject, type SchemaString, type SchemaWrapper, type ValidationErrorObject, type ValidationResult, check, check as default };
