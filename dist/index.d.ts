@@ -12,7 +12,7 @@ interface SchemaWrapper {
 }
 type Schema = SchemaString | SchemaObject | SchemaArray | SchemaWrapper;
 interface ValidationErrorObject {
-    [key: string]: ValidationErrorObject | string[] | string | undefined;
+    [key: string]: ValidationErrorObject | string[] | undefined;
 }
 type ValidationResult = ValidationErrorObject | string[] | undefined;
 declare function check(obj: unknown, schema: Schema, customRules?: RuleMap): ValidationResult;

@@ -14,7 +14,7 @@ export interface SchemaWrapper {
 export type Schema = SchemaString | SchemaObject | SchemaArray | SchemaWrapper;
 
 export interface ValidationErrorObject {
-    [key: string]: ValidationErrorObject | string[] | string | undefined;
+    [key: string]: ValidationErrorObject | string[] | undefined;
 }
 
 export type ValidationResult = ValidationErrorObject | string[] | undefined;
