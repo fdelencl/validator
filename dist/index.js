@@ -30,6 +30,7 @@ var baseRules = {
   truthy: (value) => Boolean(value),
   number: (value) => typeof value === "number" || !Number.isNaN(Number(value)),
   string: (value) => typeof value === "string",
+  not_empty_string: (value) => typeof value === "string" && value.trim() !== "",
   boolean: (value) => typeof value === "boolean",
   integer: (value) => baseRules.number(value) && Number.isInteger(Number(value)),
   timestamp_milliseconds: (value) => baseRules.integer(value),
@@ -39,10 +40,6 @@ var baseRules = {
   array: (value) => Array.isArray(value) === true,
   email: (value) => typeof value === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
   phone: (value) => typeof value === "string" && /^\+?\d{1,3}?[\s.-]?(?:\(?\d+\)?[\s.-]?)+\d$/.test(value),
-  zip: (value) => typeof value === "string" && /^[0-9]{5}$/.test(value),
-  city: (value) => typeof value === "string",
-  state: (value) => typeof value === "string",
-  country: (value) => typeof value === "string",
   latitude: (value) => typeof value === "number",
   longitude: (value) => typeof value === "number",
   ip: (value) => typeof value === "string" && /^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/.test(value)
