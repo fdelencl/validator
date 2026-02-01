@@ -20,6 +20,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
+  baseRules: () => baseRules,
   check: () => check,
   default: () => src_default
 });
@@ -151,5 +152,6 @@ function check(obj, schema, customRules = {}) {
 var src_default = check;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  baseRules,
   check
 });

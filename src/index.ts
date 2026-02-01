@@ -1,4 +1,7 @@
-import { RuleMap, baseRules } from "./baserules";
+import { RuleFn, RuleMap, baseRules } from "./baserules";
+
+export type { RuleFn, RuleMap };
+export { baseRules };
 
 export type SchemaString = string;
 

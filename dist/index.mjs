@@ -123,6 +123,7 @@ function check(obj, schema, customRules = {}) {
 }
 var src_default = check;
 export {
+  baseRules,
   check,
   src_default as default
 };
